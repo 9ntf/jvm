@@ -1,0 +1,15 @@
+public class JvmComprehension { //класс подгружается и помещяется в Metaspace
+
+    public static void main(String[] args) { //В момент вызозова метода он помещается в Stack
+        int i = 1;                      // 1 Переменная i помещается в Stack в блок метода main
+        Object o = new Object();        // 2 Создается экземпляр класса Object, ссылка на него помещается в блок метода main, класс Object помещяется в heap 
+        Integer ii = 2;                 // 3 Создается экземпляр класса Integer, ссылка на него помещается в блок метода main, класс Integer помещяется в heap
+        printAll(o, i, ii);             // 4 Вызывается метод, создается новый блок в Stack, после выполнения метода сборщик удаляет ненужные экземпляры
+        System.out.println("finished"); // 7 Выводится в консоль запись Finished
+    }
+
+    private static void printAll(Object o, int i, Integer ii) {
+        Integer uselessVar = 700;                   // 5 Создается экземпляр класса Integer, ссылка на него помещается в блок метода printAll
+        System.out.println(o.toString() + i + ii);  // 6 Класс System находится в Metaspace, у него вызывается метод .out который помещается в Stack
+    }
+}
